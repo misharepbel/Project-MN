@@ -26,7 +26,8 @@ def interpolate(x, y):
     return [lambda z: newton_table[0][0]+sum([newton_table[0][i]*prod([(z-x[j]) for j in range(i)]) for i in range(1, len(newton_table[0]))]), newton_table[0]]
 
 # Function for the interpolation error
-def compute_error(x_test, f_true, f_int):
+def compute_error(f_true, f_int):
+    x_test = np.linspace(-5.3,4.7,15)
     f_true = test_function(x_test, f_true)
     f_int = test_function(x_test, f_int)
     return (np.abs(np.array(f_true) - np.array(f_int)))
@@ -49,8 +50,8 @@ cheburashka = interpolate(fields["chebyshev"], test_function(fields["chebyshev"]
 fout3.write(f'Int:\nx:\n{fields["interpolation"]}\ny:\n{interpol[1]}\n')
 fout3.write(f'Cheb:\nx:\n{fields["chebyshev"]}\ny:\n{cheburashka[1]}\n')
 
-err_int = compute_error(fields["interpolation"], fsi, interpol[0])
-err_cheb = compute_error(fields["chebyshev"], fsi, cheburashka[0])
+err_int = compute_error(fsi, interpol[0])
+err_cheb = compute_error(fsi, cheburashka[0])
 
 fout2.write("Interpolation:\n")
 fout2.write(str(err_int))
